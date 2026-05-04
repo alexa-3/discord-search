@@ -3,6 +3,8 @@
 Search your Discord server's message history by chatting with Claude. Run a sync to pull all messages into a local SQLite database, then ask questions in a terminal chat loop.
 
 ---
+## Live demo
+[▶ Try the interactive demo](https://alexa-3.github.io/discord-search/demo.html)
 
 ## How it works
 
