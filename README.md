@@ -27,7 +27,7 @@ Search your Discord server's message history by chatting with Claude. Run a sync
 
 ## Step 2 — Install dependencies
 
-Python 3.9+ is required. A virtual environment is recommended.
+Python 3.10+ is required. A virtual environment is recommended.
 
 ```bash
 python -m venv venv
