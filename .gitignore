@@ -10,3 +10,4 @@ embeddings/
 *.egg-info/
 dist/
 build/
+.claude/
