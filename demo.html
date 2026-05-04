@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discord Claude Search — Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0c13; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 24px; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .terminal { background: #0f1117; border-radius: 12px; overflow: hidden; width: 100%; max-width: 680px; border: 1px solid #2a2d3a; }
+  .terminal-bar { background: #1a1d2e; padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #2a2d3a; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-yellow { background: #febc2e; }
+  .dot-green { background: #28c840; }
+  .terminal-title { font-size: 12px; color: #666; margin-left: 8px; }
+  .terminal-body { padding: 20px; min-height: 300px; }
+  .line { font-size: 13px; line-height: 1.8; white-space: pre-wrap; word-break: break-all; }
+  .prompt { color: #7ee787; }
+  .cmd { color: #e6edf3; }
+  .muted { color: #484f58; }
+  .filter { color: #79c0ff; }
+  .answer-label { color: #f0883e; font-weight: 500; }
+  .answer { color: #e6edf3; }
+  .link { color: #58a6ff; }
+  .tag { color: #56d364; }
+  .divider { border-top: 1px solid #2a2d3a; margin: 12px 0; }
+  .demo-tabs { display: flex; border-bottom: 1px solid #2a2d3a; background: #1a1d2e; }
+  .tab { padding: 8px 16px; font-size: 12px; font-family: inherit; color: #484f58; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none; }
+  .tab.active { color: #7ee787; border-bottom-color: #7ee787; }
+  .scene { display: none; }
+  .scene.active { display: block; }
+  .stats { display: flex; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #2a2d3a; flex-wrap: wrap; }
+  .stat-val { font-size: 22px; color: #e6edf3; font-weight: 500; }
+  .stat-label { font-size: 11px; color: #484f58; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="terminal-bar">
+    <div class="dot dot-red"></div>
+    <div class="dot dot-yellow"></div>
+    <div class="dot dot-green"></div>
+    <span class="terminal-title">bot-claude — chat.py</span>
+  </div>
+
+  <div class="demo-tabs">
+    <button class="tab active" onclick="showScene(0)">claim links</button>
+    <button class="tab" onclick="showScene(1)">team updates</button>
+    <button class="tab" onclick="showScene(2)">date range</button>
+  </div>
+
+  <div class="terminal-body">
+
+    <div class="scene active" id="scene-0">
+      <div class="line muted">Discord Search — type a question, or 'quit' to exit</div>
+      <div class="line muted">============================================================</div>
+      <div class="line" style="margin-top:12px"><span class="prompt">You: </span><span class="cmd">in #community-updates, what claim links were posted in november 2025?</span></div>
+      <div class="line" style="margin-top:8px; color:#484f58">Searching...</div>
+      <div class="line"><span class="filter">Active filters: </span><span class="muted">{'channels': ['community-updates'], 'date_from': '2025-11-01', 'date_to': '2025-11-30'}</span></div>
+      <div class="line muted">Found 38 relevant messages. Generating answer...</div>
+      <div class="divider"></div>
+      <div class="line"><span class="answer-label">Claude:</span></div>
+      <div class="line answer" style="margin-top:6px">Here are the claim links posted in November 2025:</div>
+      <div class="line" style="margin-top:8px"><span class="tag">$BOB TGE</span> <span class="muted">2025-11-20</span></div>
+      <div class="line"><span class="link">  → https://cookie.gobob.xyz/</span></div>
+      <div class="line" style="margin-top:6px"><span class="tag">$ANTIX TGE</span> <span class="muted">2025-11-28</span></div>
+      <div class="line"><span class="link">  → https://token.antix.in/dashboard/claim</span></div>
+      <div class="line" style="margin-top:6px"><span class="tag">$TEN Protocol</span> <span class="muted">2025-11-27</span></div>
+      <div class="line"><span class="link">  → https://airdrop.ten.xyz/</span></div>
+    </div>
+
+    <div class="scene" id="scene-1">
+      <div class="line muted">Discord Search — type a question, or 'quit' to exit</div>
+      <div class="line muted">============================================================</div>
+      <div class="line" style="margin-top:12px"><span class="prompt">You: </span><span class="cmd">what did the team say about cookie pro in #dao-talks?</span></div>
+      <div class="line" style="margin-top:8px; color:#484f58">Searching...</div>
+      <div class="line"><span class="filter">Team author intent detected </span><span class="muted">— filtering by known team members</span></div>
+      <div class="line"><span class="filter">Active filters: </span><span class="muted">{'channels': ['dao-talks'], 'author_ids': [...]}</span></div>
+      <div class="line muted">Found 42 relevant messages. Generating answer...</div>
+      <div class="divider"></div>
+      <div class="line"><span class="answer-label">Claude:</span></div>
+      <div class="line answer" style="margin-top:6px">Based on team messages in #dao-talks:</div>
+      <div class="line" style="margin-top:8px; color:#e6edf3">• Product announced as a premium analytics layer for members</div>
+      <div class="line" style="color:#e6edf3">• Beta access confirmed for Diamond-tier stakers first</div>
+      <div class="line" style="color:#e6edf3">• Launch timeline: Q1 2026 per team confirmation</div>
+      <div class="line" style="margin-top:8px; color:#484f58; font-size:12px">Sources: team members, 2025-12-01 to 2025-12-14</div>
+    </div>
+
+    <div class="scene" id="scene-2">
+      <div class="line muted">Discord Search — type a question, or 'quit' to exit</div>
+      <div class="line muted">============================================================</div>
+      <div class="line" style="margin-top:12px"><span class="prompt">You: </span><span class="cmd">official campaign announcements between september and december 2025</span></div>
+      <div class="line" style="margin-top:8px; color:#484f58">Searching...</div>
+      <div class="line"><span class="filter">Official channel intent detected</span></div>
+      <div class="line"><span class="filter">Active filters: </span><span class="muted">{'channels': ['announcements', 'community-updates', ...], 'date_from': '2025-09-01', 'date_to': '2025-12-31'}</span></div>
+      <div class="line muted">Found 51 relevant messages. Generating answer...</div>
+      <div class="divider"></div>
+      <div class="line"><span class="answer-label">Claude:</span></div>
+      <div class="line answer" style="margin-top:6px">Official campaign announcements Sept–Dec 2025:</div>
+      <div class="line" style="margin-top:8px; color:#e6edf3">• <span class="tag">Velora</span> Phase 1–3 (Sep–Nov) — Sablier vesting for Snappers + Stakers</div>
+      <div class="line" style="color:#e6edf3">• <span class="tag">$BOB</span> TGE — Nov 20</div>
+      <div class="line" style="color:#e6edf3">• <span class="tag">$ANTIX</span> TGE — Nov 28</div>
+      <div class="line" style="color:#e6edf3">• <span class="tag">$VOOI</span> MAF + TGE — Dec 18, largest MAF ($400K)</div>
+    </div>
+
+  </div>
+
+  <div style="padding: 0 20px 20px;">
+    <div class="stats">
+      <div><div class="stat-val">888k+</div><div class="stat-label">messages indexed</div></div>
+      <div><div class="stat-val">43</div><div class="stat-label">channels synced</div></div>
+      <div><div class="stat-val">~$0.02</div><div class="stat-label">per query</div></div>
+      <div><div class="stat-val">local</div><div class="stat-label">no cloud storage</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showScene(i) {
+  document.querySelectorAll('.scene').forEach((s,idx) => s.classList.toggle('active', idx === i));
+  document.querySelectorAll('.tab').forEach((t,idx) => t.classList.toggle('active', idx === i));
+}
+</script>
+</body>
+</html>
