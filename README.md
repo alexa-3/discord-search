@@ -6,6 +6,8 @@ Search your Discord server's message history by chatting with Claude. Run a sync
 ## Live demo
 [▶ Try the interactive demo](https://alexa-3.github.io/discord-search/demo.html)
 
+---
+
 ## How it works
 
 1. **`sync.py`** — connects to Discord with a bot token, fetches every message from every text channel, stores them in `messages.db` with FTS5 full-text search and vector embeddings.
