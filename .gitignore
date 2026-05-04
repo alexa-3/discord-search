@@ -1,0 +1,12 @@
+.env
+*.db
+__pycache__/
+.DS_Store
+*.pyc
+*.pyo
+.cache/
+sentence_transformers/
+embeddings/
+*.egg-info/
+dist/
+build/
